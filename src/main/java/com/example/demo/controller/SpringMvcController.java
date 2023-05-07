@@ -28,7 +28,7 @@ public class SpringMvcController {
     public String springMvcHtml() {
         log.debug("springmvc html");
         log.info("springmvc html");
-        return "/springmvc";
+        return "springmvc";
     }
 
     /*** RequestHeaderController ***/
