@@ -1,23 +1,37 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.HelloData;
+import com.example.demo.dto.TestObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+/**
+ * @RequestMapping에 method 속성으로 HTTP 메서드를 지정하지 않으면
+ * GET, HEAD, POST, PUT, PATCH, DELETE 모두 허용
+ *
+ */
 
 //@RestController
 @Controller
@@ -70,6 +84,7 @@ public class SpringMvcController {
         return "ok - " + username + ", " + age;
     }
 
+    // http://localhost:8080/request-param-v3?username=hello&age=20
     @RequestMapping("/request-param-v3")
     @ResponseBody
     public String requestParamV3(@RequestParam String username, //! 제일 좋은 방법인듯
@@ -113,6 +128,7 @@ public class SpringMvcController {
         return "ok - " + paramMap.get("username") + ", " + paramMap.get("age");
     }
 
+    // http://localhost:8080/model-attribute-v1?username=hello&age=20
     @ResponseBody
     @RequestMapping("/model-attribute-v1")
     public String modelAttributeV1(@ModelAttribute HelloData helloData) { //!
@@ -129,6 +145,137 @@ public class SpringMvcController {
         log.info("helloData={}", helloData);
 
         return "ok - " + helloData.toString();
+    }
+    /****************************************/
+
+    /*** RequestBodyStringController ***/
+    @PostMapping("/request-body-string-v1")
+    public void requestBodyString(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("messageBody={}", messageBody);
+
+        response.getWriter().write("ok");
+    }
+
+    @PostMapping("/request-body-string-v2")
+    public void requestBodyStringV2(InputStream inputStream, Writer responseWriter) throws IOException {
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("messageBody={}", messageBody);
+
+        responseWriter.write("ok");
+    }
+
+    @PostMapping("/request-body-string-v3")
+    public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity) throws IOException {
+        log.info("messageBody={}", httpEntity.getBody());
+
+        return new HttpEntity<>("ok");
+    }
+
+    @ResponseBody
+    @PostMapping("/request-body-string-v4")
+    public String requestBodyStringV4(@RequestBody String messageBody) {
+        log.info("messageBody={}", messageBody);
+
+        return "ok";
+    }
+    /****************************************/
+
+    /*** RequestBodyJsonController ***/
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @PostMapping("request-body-json-v1")
+    public void requestBodyJsonV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("messageBody={}", messageBody);
+        HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        response.getWriter().write("ok");
+    }
+
+    /**
+     * @RequestBody
+     * HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     *
+     * @ResponseBody
+     * - 모든 메서드에 @ResponseBody 적용
+     * - 메시지 바디 정보 직접 반환(view 조회X)
+     * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     */
+    @ResponseBody
+    @PostMapping("request-body-json-v2")
+    public String requestBodyJsonV2(@RequestBody String messageBody) throws IOException {
+        log.info("messageBody={}", messageBody);
+        HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        return "ok";
+    }
+
+    /**
+     * @RequestBody 생략 불가능(@ModelAttribute 가 적용되어 버림)
+     * HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter (contenttype: application/json)
+     */
+    @ResponseBody
+    @PostMapping("request-body-json-v3")
+    public String requestBodyJsonV3(@RequestBody HelloData helloData) throws IOException { //!
+        log.info("messageBody={}", helloData);
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        return "ok";
+    }
+
+    @ResponseBody
+    @PostMapping("request-body-json-v4")
+    public String requestBodyJsonV4(HttpEntity<HelloData> httpEntity) throws IOException {
+        HelloData data = httpEntity.getBody();
+        log.info("username={}, age={}", data.getUsername(), data.getAge());
+        return "ok";
+    }
+
+    /**
+     * @RequestBody 생략 불가능(@ModelAttribute 가 적용되어 버림)
+     * HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter (contenttype: application/json)
+     *
+     * @ResponseBody 적용
+     * - 메시지 바디 정보 직접 반환(view 조회X)
+     * - HttpMessageConverter 사용 -> MappingJackson2HttpMessageConverter 적용
+    (Accept: application/json)
+     */
+    @ResponseBody
+    @PostMapping("/request-body-json-v5")
+    public HelloData requestBodyJsonV5(@RequestBody HelloData data) { //!
+        log.info("username={}, age={}", data.getUsername(), data.getAge());
+        return data;
+    }
+
+    @ResponseBody
+    @PostMapping("request-body-json-v6")
+    public TestObject requestBodyJsonV6(@RequestBody HelloData helloData) throws IOException { //!
+        log.info("messageBody={}", helloData);
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        TestObject testObject = new TestObject();
+
+        if (helloData.getUsername().equals("kim")) {
+            testObject.setText("seoul");
+        } else {
+            testObject.setText("busan");
+        }
+
+        if (helloData.getAge() == 10) {
+            testObject.setNumber(33);
+        } else {
+            testObject.setNumber(44);
+        }
+
+        return testObject;
     }
     /****************************************/
 
