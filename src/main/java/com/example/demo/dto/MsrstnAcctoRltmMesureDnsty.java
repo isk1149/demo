@@ -10,24 +10,24 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArpltnInforInqireSvc {
+public class MsrstnAcctoRltmMesureDnsty {
 
-    private InnerArpltnInforInqireSvcResponse response;
+    private InnerMsrstnAcctoRltmMesureDnstyResponse response;
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    static class InnerArpltnInforInqireSvcResponse {
-        private InnerArpltnInforInqireSvcHeader header;
-        private InnerArpltnInforInqireSvcBody body;
+    static class InnerMsrstnAcctoRltmMesureDnstyResponse {
+        private InnerMsrstnAcctoRltmMesureDnstyHeader header;
+        private InnerMsrstnAcctoRltmMesureDnstyBody body;
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    static class InnerArpltnInforInqireSvcHeader {
+    static class InnerMsrstnAcctoRltmMesureDnstyHeader {
         private String resultCode;
         private String resultMsg;
     }
@@ -36,8 +36,8 @@ public class ArpltnInforInqireSvc {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    static class InnerArpltnInforInqireSvcBody {
-        private List<InnerArpltnInforInqireSvcItem> items = new ArrayList<>();
+    static class InnerMsrstnAcctoRltmMesureDnstyBody {
+        private List<InnerMsrstnAcctoRltmMesureDnstyItem> items = new ArrayList<>();
         private int numOfRows;
         private int pageNo;
         private int totalCount;
@@ -55,7 +55,7 @@ public class ArpltnInforInqireSvc {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    static class InnerArpltnInforInqireSvcItem {
+    static class InnerMsrstnAcctoRltmMesureDnstyItem {
         private String so2Grade;
         private String coFlag;
         private String khaiValue;

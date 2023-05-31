@@ -39,6 +39,7 @@ public class MinuDustFrcstDspth {
     @AllArgsConstructor
     static class InnerMinuDustFrcstDspthBody {
         private List<InnerMinuDustFrcstDspthItem> items = new ArrayList<>();
+        private int totalCount;
     }
 
     @Getter
@@ -48,7 +49,7 @@ public class MinuDustFrcstDspth {
     static class InnerMinuDustFrcstDspthItem {
         private String dataTime;
         private String informCode;
-        /*private String informOverall;
+        private String informOverall;
         private String informCause;
         private String informGrade;
         private String actionKnack;
@@ -61,6 +62,6 @@ public class MinuDustFrcstDspth {
         private String imageUrl7;
         private String imageUrl8;
         private String imageUrl9;
-        private String informData;*/
+        private String informData;
     }
 }
