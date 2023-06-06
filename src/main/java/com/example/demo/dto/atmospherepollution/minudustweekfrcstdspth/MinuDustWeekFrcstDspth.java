@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.atmospherepollution.minudustweekfrcstdspth;
 
 import lombok.*;
 
@@ -12,9 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class MinuDustWeekFrcstDspth {
 
-    private InnerMinuDustWeekFrcstDspthResponse response;
+    //private InnerMinuDustWeekFrcstDspthResponse response;
+    private MinuDustWeekFrcstDspthResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -58,6 +59,6 @@ public class MinuDustWeekFrcstDspth {
         private String frcstThreeDt;
         private String frcstFourDt;
         private String gwthcnd;
-    }
+    }*/
 
 }

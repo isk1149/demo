@@ -1,6 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
+import com.example.demo.dto.atmospherepollution.ctprvnrltmmesurednsty.CtprvnRltmMesureDnsty;
+import com.example.demo.dto.atmospherepollution.minudustfrcstdspth.MinuDustFrcstDspth;
+import com.example.demo.dto.atmospherepollution.minudustweekfrcstdspth.MinuDustWeekFrcstDspth;
+import com.example.demo.dto.atmospherepollution.msrstnacctorltmmesurednsty.MsrstnAcctoRltmMesureDnsty;
+import com.example.demo.dto.atmospherepollution.ulfptcaalarminfo.UlfptcaAlarmInfo;
+import com.example.demo.dto.atmospherepollution.unityairenvrnidexsnstiveabovemsrstnlist.UnityAirEnvrnIdexSnstiveAboveMsrstnList;
+import com.example.demo.dto.hospital.hsptlbassinfoinqire.HsptlBassInfoInqire;
+import com.example.demo.dto.hospital.HsptlMdcncLcinfoInqire;
 import com.example.demo.dto.hospital.HsptlMdcncListInfoInqire;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,18 +40,179 @@ public class OpenApiController {
         return "openapi";
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @GetMapping("/getUlfptcaAlarmInfo")
     public String ulfptcaAlarmInfo() throws IOException {
 
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); *//*xml 또는 json*//*
-        urlBuilder.append("&" + URLEncoder.encode("year","UTF-8") + "=" + URLEncoder.encode("2023", "UTF-8")); *//*측정 연도*//*
-        log.info("serviceKey={}", serviceKey);
-        log.info("urlBuilder.toString()={}", urlBuilder.toString());
+        String url = "http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo";
 
-        URL url = new URL(urlBuilder.toString());
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("year", URLEncoder.encode("2023", "UTF-8"));
+
+        //UlfptcaAlarmInfo jsonObject = new UlfptcaAlarmInfo();
+        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UlfptcaAlarmInfo.class);
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        UlfptcaAlarmInfo jsonObject = objectMapper.readValue(jsonString, UlfptcaAlarmInfo.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getMsrstnAcctoRltmMesureDnsty")
+    public String msrstnAcctoRltmMesureDnsty() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("stationName", URLEncoder.encode("종로구", "UTF-8"));
+        paramMap.put("dataTerm", URLEncoder.encode("DAILY", "UTF-8"));
+
+        //MsrstnAcctoRltmMesureDnsty jsonObject = new MsrstnAcctoRltmMesureDnsty();
+        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MsrstnAcctoRltmMesureDnsty.class);
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        MsrstnAcctoRltmMesureDnsty jsonObject = objectMapper.readValue(jsonString, MsrstnAcctoRltmMesureDnsty.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getUnityAirEnvrnIdexSnstiveAboveMsrstnList")
+    public String unityAirEnvrnIdexSnstiveAboveMsrstnList() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getUnityAirEnvrnIdexSnstiveAboveMsrstnList";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+
+        //UnityAirEnvrnIdexSnstiveAboveMsrstnList jsonObject = new UnityAirEnvrnIdexSnstiveAboveMsrstnList();
+        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UnityAirEnvrnIdexSnstiveAboveMsrstnList.class);
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        UnityAirEnvrnIdexSnstiveAboveMsrstnList jsonObject = objectMapper.readValue(jsonString, UnityAirEnvrnIdexSnstiveAboveMsrstnList.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getCtprvnRltmMesureDnsty")
+    public String ctprvnRltmMesureDnsty() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("sidoName", URLEncoder.encode("전국", "UTF-8"));
+
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        CtprvnRltmMesureDnsty jsonObject = objectMapper.readValue(jsonString, CtprvnRltmMesureDnsty.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getMinuDustFrcstDspth")
+    public String minuDustFrcstDspth() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+
+        //MinuDustFrcstDspth jsonObject = new MinuDustFrcstDspth();
+        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustFrcstDspth.class);
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        MinuDustFrcstDspth jsonObject = objectMapper.readValue(jsonString, MinuDustFrcstDspth.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getMinuDustWeekFrcstDspth")
+    public String minuDustWeekFrcstDspth() throws IOException{
+
+        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustWeekFrcstDspth";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+
+        //MinuDustWeekFrcstDspth jsonObject = new MinuDustWeekFrcstDspth();
+        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustWeekFrcstDspth.class);
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        MinuDustWeekFrcstDspth jsonObject = objectMapper.readValue(jsonString, MinuDustWeekFrcstDspth.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    /**
+     * 주소, 기관구분, 진료과목 등을 기준으로 진료시간 등의 병/의원 정보를 조회하는 병 의원 목록정보 조회기능 제공
+     * @return String
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/getHsptlMdcncListInfoInqire")
+    public String hsptlMdcncListInfoInqire() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("Q0", URLEncoder.encode("서울특별시", "UTF-8"));
+        paramMap.put("Q1", URLEncoder.encode("강남구", "UTF-8"));
+        paramMap.put("Q2", URLEncoder.encode("B", "UTF-8"));
+
+        //StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire"); /*URL*/
+        //urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        //urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); /*주소(시도)*/
+        //urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); /*주소(시군구)*/
+        //urlBuilder.append("&" + URLEncoder.encode("QZ","UTF-8") + "=" + URLEncoder.encode("B", "UTF-8")); /*CODE_MST의'H000' 참조(B:병원, C:의원)*/
+        //log.info("url={}", urlBuilder.toString());
+
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
+
+        /*URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -62,334 +230,34 @@ public class OpenApiController {
             sb.append(line);
         }
         rd.close();
-        conn.disconnect();
+        conn.disconnect();*/
 
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        UlfptcaAlarmInfo json = objectMapper.readValue(sb.toString(), UlfptcaAlarmInfo.class);
-        String jsonString = objectMapper
+        JSONObject json = XML.toJSONObject(jsonString);
+        HsptlMdcncListInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncListInfoInqire.class);
+        String jsonPrettyString = objectMapper
                 .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
+                .writeValueAsString(jsonObject);
 
-        return jsonString;
-    }*/
-
-    @ResponseBody
-    @GetMapping("/getUlfptcaAlarmInfo")
-    public String ulfptcaAlarmInfo() throws IOException {
-
-        String url = "http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-        paramMap.put("year", URLEncoder.encode("2023", "UTF-8"));
-
-        UlfptcaAlarmInfo jsonObject = new UlfptcaAlarmInfo();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UlfptcaAlarmInfo.class);
-
-        return jsonString;
+        return jsonPrettyString;
     }
 
-/*    @ResponseBody
-    @GetMapping("/getMsrstnAcctoRltmMesureDnsty")
-    public String msrstnAcctoRltmMesureDnsty() throws IOException {
-
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty"); //URL
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); //Service Key
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //xml 또는 json
-        urlBuilder.append("&" + URLEncoder.encode("stationName","UTF-8") + "=" + URLEncoder.encode("종로구", "UTF-8")); //한 페이지 결과 수(조회 날짜로 검색 시 사용 안함)
-        urlBuilder.append("&" + URLEncoder.encode("dataTerm","UTF-8") + "=" + URLEncoder.encode("DAILY", "UTF-8")); //페이지번호(조회 날짜로 검색 시 사용 안함)
-        log.info("url={}", urlBuilder.toString());
-
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        //System.out.println(sb.toString());
-
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        MsrstnAcctoRltmMesureDnsty json = objectMapper.readValue(sb.toString(), MsrstnAcctoRltmMesureDnsty.class);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
-
-        log.info("jsonString={}", jsonString);
-
-        return jsonString;
-    }*/
-
+    /**
+     * 병/의원 위치정보 조회
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
-    @GetMapping("/getMsrstnAcctoRltmMesureDnsty")
-    public String msrstnAcctoRltmMesureDnsty() throws IOException {
-
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-        paramMap.put("stationName", URLEncoder.encode("종로구", "UTF-8"));
-        paramMap.put("dataTerm", URLEncoder.encode("DAILY", "UTF-8"));
-
-        MsrstnAcctoRltmMesureDnsty jsonObject = new MsrstnAcctoRltmMesureDnsty();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MsrstnAcctoRltmMesureDnsty.class);
-
-        return jsonString;
-    }
-
-    /*@ResponseBody
-    @GetMapping("/getUnityAirEnvrnIdexSnstiveAboveMsrstnList")
-    public String unityAirEnvrnIdexSnstiveAboveMsrstnList() throws IOException {
-
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getUnityAirEnvrnIdexSnstiveAboveMsrstnList"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); *//*xml 또는 json*//*
-
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        //System.out.println(sb.toString());
-
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        UnityAirEnvrnIdexSnstiveAboveMsrstnList json = objectMapper.readValue(sb.toString(), UnityAirEnvrnIdexSnstiveAboveMsrstnList.class);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
-
-        log.info("jsonString={}", jsonString);
-
-        return jsonString;
-    }*/
-
-    @ResponseBody
-    @GetMapping("/getUnityAirEnvrnIdexSnstiveAboveMsrstnList")
-    public String unityAirEnvrnIdexSnstiveAboveMsrstnList() throws IOException {
-
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getUnityAirEnvrnIdexSnstiveAboveMsrstnList";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-
-        UnityAirEnvrnIdexSnstiveAboveMsrstnList jsonObject = new UnityAirEnvrnIdexSnstiveAboveMsrstnList();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UnityAirEnvrnIdexSnstiveAboveMsrstnList.class);
-
-        return jsonString;
-    }
-
-    /*@ResponseBody
-    @GetMapping("/getCtprvnRltmMesureDnsty")
-    public String ctprvnRltmMesureDnsty() throws IOException {
-
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); *//*xml 또는 json*//*
-        urlBuilder.append("&" + URLEncoder.encode("sidoName","UTF-8") + "=" + URLEncoder.encode("전국", "UTF-8")); *//*xml 또는 json*//*
-
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        //System.out.println(sb.toString());
-
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        CtprvnRltmMesureDnsty json = objectMapper.readValue(sb.toString(), CtprvnRltmMesureDnsty.class);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
-
-        log.info("jsonString={}", jsonString);
-
-        return jsonString;
-    }*/
-
-    @ResponseBody
-    @GetMapping("/getCtprvnRltmMesureDnsty")
-    public String ctprvnRltmMesureDnsty() throws IOException {
-
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-        paramMap.put("sidoName", URLEncoder.encode("전국", "UTF-8"));
-
-        CtprvnRltmMesureDnsty jsonObject = new CtprvnRltmMesureDnsty();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, CtprvnRltmMesureDnsty.class);
-
-        return jsonString;
-    }
-
-    /*@ResponseBody
-    @GetMapping("/getMinuDustFrcstDspth")
-    public String minuDustFrcstDspth() throws IOException {
-
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); *//*xml 또는 json*//*
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        //System.out.println(sb.toString());
-
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        MinuDustFrcstDspth json = objectMapper.readValue(sb.toString(), MinuDustFrcstDspth.class);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
-
-        log.info("jsonString={}", jsonString);
-
-        return jsonString;
-    }*/
-
-    @ResponseBody
-    @GetMapping("/getMinuDustFrcstDspth")
-    public String minuDustFrcstDspth() throws IOException {
-
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-
-        MinuDustFrcstDspth jsonObject = new MinuDustFrcstDspth();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustFrcstDspth.class);
-
-        return jsonString;
-    }
-
-    /*@ResponseBody
-    @GetMapping("/getMinuDustWeekFrcstDspth")
-    public String minuDustWeekFrcstDspth() throws IOException{
-
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustWeekFrcstDspth"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); *//*xml 또는 json*//*
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        log.info("getMinuDustWeekFrcstDspth Response code={}", conn.getResponseCode());
-
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        MinuDustWeekFrcstDspth json = objectMapper.readValue(sb.toString(), MinuDustWeekFrcstDspth.class);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(json);
-
-        log.info("jsonString={}", jsonString);
-
-        return jsonString;
-    }*/
-
-    @ResponseBody
-    @GetMapping("/getMinuDustWeekFrcstDspth")
-    public String minuDustWeekFrcstDspth() throws IOException{
-
-        String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustWeekFrcstDspth";
-
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-
-        MinuDustWeekFrcstDspth jsonObject = new MinuDustWeekFrcstDspth();
-        String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustWeekFrcstDspth.class);
-
-        return jsonString;
-    }
-
-    @ResponseBody
-    @GetMapping("/getHsptlMdcncListInfoInqire")
-    public String hospital() throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire"); /*URL*/
+    @GetMapping("/getHsptlMdcncLcinfoInqire")
+    public String hsptlMdcncLcinfoInqire() throws IOException{
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); /*주소(시도)*/
-        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); /*주소(시군구)*/
-        urlBuilder.append("&" + URLEncoder.encode("QZ","UTF-8") + "=" + URLEncoder.encode("B", "UTF-8")); /*CODE_MST의'H000' 참조(B:병원, C:의원)*/
+        urlBuilder.append("&" + URLEncoder.encode("WGS84_LAT","UTF-8") + "=" + URLEncoder.encode("37.538034", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("WGS84_LON","UTF-8") + "=" + URLEncoder.encode("127.048523", "UTF-8"));
         log.info("url={}", urlBuilder.toString());
 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
         log.info("Response code={}", conn.getResponseCode());
 
         BufferedReader rd;
@@ -407,13 +275,58 @@ public class OpenApiController {
         conn.disconnect();
 
         JSONObject json = XML.toJSONObject(sb.toString());
-        HsptlMdcncListInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncListInfoInqire.class);
+        HsptlMdcncLcinfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncLcinfoInqire.class);
         String jsonString = objectMapper
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
         return jsonString;
     }
+
+    /**
+     * 병/의원별 기본정보 조회
+     * @return
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/getHsptlBassInfoInqire")
+    public String hsptlBassInfoInqire() throws IOException{
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        log.info("url={}", urlBuilder.toString());
+
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        log.info("Response code={}", conn.getResponseCode());
+
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+
+        JSONObject json = XML.toJSONObject(sb.toString());
+        log.info("json={}", json.toString());
+        HsptlBassInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlBassInfoInqire.class);
+        String jsonString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonString;
+    }
+
+
+
+
 
     @ResponseBody
     @GetMapping("/pharmacy")
@@ -449,8 +362,17 @@ public class OpenApiController {
         return sb.toString();
     }
 
-    private String openApiCallJsonStringReturn(String paramUrl, Map<String, String> paramMap, Object jsonObject, Class<?> jsonObjectClass) throws IOException{
-
+    /**
+     *
+     * @param paramUrl url
+     * @param paramMap queryParameter
+     * @param httpMethodType GET, POST, PUT ...
+     * @param messageType JSON, XML
+     * @return String
+     * @throws IOException
+     */
+    //private String openApiCallJsonStringReturn(String paramUrl, Map<String, String> paramMap, Object jsonObject, Class<?> jsonObjectClass) throws IOException{
+    private String callOpenApiAndReturnString(String paramUrl, Map<String, String> paramMap, String httpMethodType, String messageType) throws IOException{
         StringBuilder urlBuilder = new StringBuilder(paramUrl);
         if (!paramMap.isEmpty()) {
             urlBuilder.append("?");
@@ -473,8 +395,12 @@ public class OpenApiController {
 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
+        if (httpMethodType.equalsIgnoreCase("GET"))
+            conn.setRequestMethod("GET");
+
+        if (messageType.equalsIgnoreCase("JSON"))
+            conn.setRequestProperty("Content-type", "application/json");
+
         log.info("Response code={}", conn.getResponseCode());
 
         BufferedReader rd;
@@ -492,14 +418,14 @@ public class OpenApiController {
         conn.disconnect();
         //log.info("sb.toString()={}", sb.toString());
 
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        /*objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         jsonObject = objectMapper.readValue(sb.toString(), jsonObjectClass);
         String jsonString = objectMapper
                 .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(jsonObject);
+                .writeValueAsString(jsonObject);*/
 
-        return jsonString;
+        return sb.toString();
     }
 
 }

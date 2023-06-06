@@ -1,10 +1,6 @@
-package com.example.demo.dto;
+package com.example.demo.dto.atmospherepollution.unityairenvrnidexsnstiveabovemsrstnlist;
 
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Getter
 @Setter
@@ -12,9 +8,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnityAirEnvrnIdexSnstiveAboveMsrstnList {
-    private InnerUnityAirEnvrnIdexSnstiveAboveMsrstnListResponse response;
+    //private InnerUnityAirEnvrnIdexSnstiveAboveMsrstnListResponse response;
+    private UnityAirEnvrnIdexSnstiveAboveMsrstnListResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -51,5 +48,5 @@ public class UnityAirEnvrnIdexSnstiveAboveMsrstnList {
         private String stationName;
         private String stationCode;
         private String addr;
-    }
+    }*/
 }

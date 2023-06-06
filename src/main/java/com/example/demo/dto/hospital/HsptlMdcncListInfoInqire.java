@@ -1,7 +1,5 @@
 package com.example.demo.dto.hospital;
 
-import com.example.demo.dto.CtprvnRltmMesureDnsty;
-import com.example.demo.dto.MinuDustWeekFrcstDspth;
 import lombok.*;
 
 import java.util.ArrayList;
