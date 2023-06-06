@@ -1,9 +1,6 @@
-package com.example.demo.dto;
+package com.example.demo.dto.atmospherepollution.ctprvnrltmmesurednsty;
 
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -11,9 +8,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CtprvnRltmMesureDnsty {
-    private InnerCtprvnRltmMesureDnstyResponse response;
+    //private InnerCtprvnRltmMesureDnstyResponse response;
+    private CtprvnRltmMesureDnstyResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -76,5 +74,5 @@ public class CtprvnRltmMesureDnsty {
         private String no2Flag;
         private String pm10Flag;
         private String pm25Flag;
-    }
+    }*/
 }

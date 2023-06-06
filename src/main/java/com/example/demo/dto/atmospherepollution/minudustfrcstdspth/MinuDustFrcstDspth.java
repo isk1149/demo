@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.atmospherepollution.minudustfrcstdspth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MinuDustFrcstDspth {
-    private InnerMinuDustFrcstDspthResponse response;
+    //private InnerMinuDustFrcstDspthResponse response;
+    private MinuDustFrcstDspthResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -63,5 +64,5 @@ public class MinuDustFrcstDspth {
         private String imageUrl8;
         private String imageUrl9;
         private String informData;
-    }
+    }*/
 }

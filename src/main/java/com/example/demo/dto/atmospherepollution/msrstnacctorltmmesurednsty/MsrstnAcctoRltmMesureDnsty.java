@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.atmospherepollution.msrstnacctorltmmesurednsty;
 
 import lombok.*;
 
@@ -12,9 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class MsrstnAcctoRltmMesureDnsty {
 
-    private InnerMsrstnAcctoRltmMesureDnstyResponse response;
+    //private InnerMsrstnAcctoRltmMesureDnstyResponse response;
+    private MsrstnAcctoRltmMesureDnstyResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -43,13 +44,13 @@ public class MsrstnAcctoRltmMesureDnsty {
         private int totalCount;
     }
 
-    /*@Getter
+    *//*@Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     static class InnerArpltnInforInqireSvcItems {
         private InnerArpltnInforInqireSvcItem item;
-    }*/
+    }*//*
 
     @Getter
     @Setter
@@ -84,5 +85,5 @@ public class MsrstnAcctoRltmMesureDnsty {
         private String no2Flag;
         private String pm10Flag;
         private String pm25Flag;
-    }
+    }*/
 }
