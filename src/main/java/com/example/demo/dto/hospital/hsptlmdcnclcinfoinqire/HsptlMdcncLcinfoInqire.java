@@ -1,4 +1,4 @@
-package com.example.demo.dto.hospital;
+package com.example.demo.dto.hospital.hsptlmdcnclcinfoinqire;
 
 import lombok.*;
 
@@ -11,9 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HsptlMdcncLcinfoInqire {
-    private InnerHsptlMdcncLcinfoInqireResponse response;
+    //private InnerHsptlMdcncLcinfoInqireResponse response;
+    private HsptlMdcncLcinfoInqireResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @ToString
     @NoArgsConstructor
@@ -77,5 +78,5 @@ public class HsptlMdcncLcinfoInqire {
         private String longitude;
         private String startTime;
         private String cnt;
-    }
+    }*/
 }

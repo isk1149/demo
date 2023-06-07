@@ -7,8 +7,8 @@ import com.example.demo.dto.atmospherepollution.msrstnacctorltmmesurednsty.Msrst
 import com.example.demo.dto.atmospherepollution.ulfptcaalarminfo.UlfptcaAlarmInfo;
 import com.example.demo.dto.atmospherepollution.unityairenvrnidexsnstiveabovemsrstnlist.UnityAirEnvrnIdexSnstiveAboveMsrstnList;
 import com.example.demo.dto.hospital.hsptlbassinfoinqire.HsptlBassInfoInqire;
-import com.example.demo.dto.hospital.HsptlMdcncLcinfoInqire;
-import com.example.demo.dto.hospital.HsptlMdcncListInfoInqire;
+import com.example.demo.dto.hospital.hsptlmdcnclcinfoinqire.HsptlMdcncLcinfoInqire;
+import com.example.demo.dto.hospital.hsptlmdcnclistinfoinqire.HsptlMdcncListInfoInqire;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -249,13 +249,24 @@ public class OpenApiController {
     @ResponseBody
     @GetMapping("/getHsptlMdcncLcinfoInqire")
     public String hsptlMdcncLcinfoInqire() throws IOException{
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+
+        String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("WGS84_LAT", URLEncoder.encode("37.538034", "UTF-8"));
+        paramMap.put("WGS84_LON", URLEncoder.encode("127.048523", "UTF-8"));
+        //paramMap.put("Q2", URLEncoder.encode("B", "UTF-8"));
+
+        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire"); *//*URL*//*
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
         urlBuilder.append("&" + URLEncoder.encode("WGS84_LAT","UTF-8") + "=" + URLEncoder.encode("37.538034", "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("WGS84_LON","UTF-8") + "=" + URLEncoder.encode("127.048523", "UTF-8"));
-        log.info("url={}", urlBuilder.toString());
+        log.info("url={}", urlBuilder.toString());*/
 
-        URL url = new URL(urlBuilder.toString());
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
+
+        /*URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         log.info("Response code={}", conn.getResponseCode());
@@ -272,15 +283,15 @@ public class OpenApiController {
             sb.append(line);
         }
         rd.close();
-        conn.disconnect();
+        conn.disconnect();*/
 
-        JSONObject json = XML.toJSONObject(sb.toString());
+        JSONObject json = XML.toJSONObject(jsonString);
         HsptlMdcncLcinfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncLcinfoInqire.class);
-        String jsonString = objectMapper
+        String jsonPrettyString = objectMapper
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonString;
+        return jsonPrettyString;
     }
 
     /**
@@ -291,11 +302,19 @@ public class OpenApiController {
     @ResponseBody
     @GetMapping("/getHsptlBassInfoInqire")
     public String hsptlBassInfoInqire() throws IOException{
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
-        log.info("url={}", urlBuilder.toString());
 
-        URL url = new URL(urlBuilder.toString());
+        String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+
+        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire"); *//*URL*//*
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
+        log.info("url={}", urlBuilder.toString());*/
+
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
+
+        /*URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         log.info("Response code={}", conn.getResponseCode());
@@ -312,20 +331,16 @@ public class OpenApiController {
             sb.append(line);
         }
         rd.close();
-        conn.disconnect();
+        conn.disconnect();*/
 
-        JSONObject json = XML.toJSONObject(sb.toString());
-        log.info("json={}", json.toString());
+        JSONObject json = XML.toJSONObject(jsonString);
         HsptlBassInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlBassInfoInqire.class);
-        String jsonString = objectMapper
+        String jsonPrettyString = objectMapper
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonString;
+        return jsonPrettyString;
     }
-
-
-
 
 
     @ResponseBody

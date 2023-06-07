@@ -1,4 +1,4 @@
-package com.example.demo.dto.hospital;
+package com.example.demo.dto.hospital.hsptlmdcnclistinfoinqire;
 
 import lombok.*;
 
@@ -101,9 +101,10 @@ public class HsptlMdcncListInfoInqire {
 @AllArgsConstructor
 public class HsptlMdcncListInfoInqire {
 
-    private InnerHsptlMdcncListInfoInqireResponse response;
+    //private InnerHsptlMdcncListInfoInqireResponse response;
+    private HsptlMdcncListInfoInqireResponse response;
 
-    @Getter
+    /*@Getter
     @Setter
     @ToString
     @NoArgsConstructor
@@ -185,5 +186,5 @@ public class HsptlMdcncListInfoInqire {
         private String postCdn2;
         private String wgs84Lon;
         private String wgs84Lat;
-    }
+    }*/
 }
