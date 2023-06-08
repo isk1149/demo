@@ -9,6 +9,8 @@ import com.example.demo.dto.atmospherepollution.unityairenvrnidexsnstiveabovemsr
 import com.example.demo.dto.hospital.hsptlbassinfoinqire.HsptlBassInfoInqire;
 import com.example.demo.dto.hospital.hsptlmdcnclcinfoinqire.HsptlMdcncLcinfoInqire;
 import com.example.demo.dto.hospital.hsptlmdcnclistinfoinqire.HsptlMdcncListInfoInqire;
+import com.example.demo.dto.pharmacy.parmacybassinfoinqire.ParmacyBassInfoInqire;
+import com.example.demo.dto.pharmacy.parmacylcinfoinqire.ParmacyLcinfoInqire;
 import com.example.demo.dto.pharmacy.parmacylistinfoinqire.ParmacyListInfoInqire;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -390,6 +392,111 @@ public class OpenApiController {
 
         JSONObject json = XML.toJSONObject(jsonString);
         ParmacyListInfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyListInfoInqire.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getParmacyLcinfoInqire")
+    public String parmacyLcinfoInqire() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        paramMap.put("WGS84_LAT", URLEncoder.encode("37.503041", "UTF-8"));
+        paramMap.put("WGS84_LON", URLEncoder.encode("127.045502", "UTF-8"));
+
+        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"); *//*URL*//*
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
+        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); *//*주소(시도)*//*
+        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); *//*주소(시군구)*//*
+        urlBuilder.append("&" + URLEncoder.encode("QT","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*월~일요일, 공휴일: 1~8*//*
+        urlBuilder.append("&" + URLEncoder.encode("QN","UTF-8") + "=" + URLEncoder.encode("삼성약국", "UTF-8")); *//*기관명*//*
+        urlBuilder.append("&" + URLEncoder.encode("ORD","UTF-8") + "=" + URLEncoder.encode("NAME", "UTF-8")); *//*순서*//*
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*페이지 번호*//*
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); *//*목록 건수*//*
+         */
+
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
+
+        /*URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();*/
+        //System.out.println(sb.toString());
+
+        JSONObject json = XML.toJSONObject(jsonString);
+        ParmacyLcinfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyLcinfoInqire.class);
+        String jsonPrettyString = objectMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(jsonObject);
+
+        return jsonPrettyString;
+    }
+
+    @ResponseBody
+    @GetMapping("/getParmacyBassInfoInqire")
+    public String parmacyBassInfoInqire() throws IOException {
+
+        String url = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyBassInfoInqire";
+
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("serviceKey", serviceKey);
+        //paramMap.put("HPID", "C1108484");
+
+        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"); *//*URL*//*
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
+        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); *//*주소(시도)*//*
+        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); *//*주소(시군구)*//*
+        urlBuilder.append("&" + URLEncoder.encode("QT","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*월~일요일, 공휴일: 1~8*//*
+        urlBuilder.append("&" + URLEncoder.encode("QN","UTF-8") + "=" + URLEncoder.encode("삼성약국", "UTF-8")); *//*기관명*//*
+        urlBuilder.append("&" + URLEncoder.encode("ORD","UTF-8") + "=" + URLEncoder.encode("NAME", "UTF-8")); *//*순서*//*
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*페이지 번호*//*
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); *//*목록 건수*//*
+         */
+
+        String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
+
+        /*URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();*/
+        //System.out.println(sb.toString());
+
+        JSONObject json = XML.toJSONObject(jsonString);
+        ParmacyBassInfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyBassInfoInqire.class);
         String jsonPrettyString = objectMapper
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
