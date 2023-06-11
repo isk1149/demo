@@ -37,8 +37,10 @@ public class DistanceServiceImpl implements DistanceService {
 //        );
         hospitalLatLngs = new ArrayList<>();
         List<HsptlMdcncListInfoInqireItem> item = hospitals.getResponse().getBody().getItems().getItem();
+        LatLng metLatLng = new LatLng("metlife", 37.503041, 127.045502);
         for (int i = 0; i < item.size(); i++) {
             hospitalLatLngs.add(new LatLng(item.get(i).getHpid(), item.get(i).getWgs84Lat(), item.get(i).getWgs84Lon()));
+            item.get(i).setDistance(Math.round(hospitalLatLngs.get(i).distanceTo(metLatLng)*100)/100.0);
         }
 
         // Sort the list by the shortest distance to the current latitude and longitude.
@@ -49,6 +51,7 @@ public class DistanceServiceImpl implements DistanceService {
         });
 
         log.info("latLngs.size={}", hospitalLatLngs.size());
+        log.info("item.distance={}", item.get(0).getDutyTel1() + "/ " + item.get(0).getDistance());
         //log.info("latLngs.get(0)={}", latLngs.get(0).getHpid() + "/" + latLngs.get(0).getLatitude() + "/" + latLngs.get(0).getLongitude());
 
         return hospitalLatLngs;
@@ -61,8 +64,10 @@ public class DistanceServiceImpl implements DistanceService {
 
         pharmacyLatLngs = new ArrayList<>();
         List<ParmacyListInfoInqireItem> item = pharmacies.getResponse().getBody().getItems().getItem();
+        LatLng metLatLng = new LatLng("metlife", 37.503041, 127.045502);
         for (int i = 0; i < item.size(); i++) {
             pharmacyLatLngs.add(new LatLng(item.get(i).getHpid(), item.get(i).getWgs84Lat(), item.get(i).getWgs84Lon()));
+            item.get(i).setDistance(Math.round(pharmacyLatLngs.get(i).distanceTo(metLatLng)*100)/100.0);
         }
 
         // Sort the list by the shortest distance to the current latitude and longitude.
@@ -73,6 +78,7 @@ public class DistanceServiceImpl implements DistanceService {
         });
 
         log.info("latLngs.size={}", pharmacyLatLngs.size());
+        log.info("item.distance={}", item.get(0).getDutyTel1() + "/ " + item.get(0).getDistance());
         //log.info("latLngs.get(0)={}", latLngs.get(0).getHpid() + "/" + latLngs.get(0).getLatitude() + "/" + latLngs.get(0).getLongitude());
 
         return pharmacyLatLngs;

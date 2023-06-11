@@ -8,22 +8,65 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
     <div class="jumbotron">
-        <p class="lead"><b>Hospital</b></p>
+        <!--<p class="lead"><b>Particulate matter</b></p>-->
+        <h5>Particulate matter</h5>
+        <div>
+            <table class="table" style="background-color: white;">
+                <thead>
+                <tr>
+                    <th>Station</th>
+                    <th>Total grade</th>
+                    <th>PM10</th>
+                    <th>PM2.5</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<span th:text="(10 % 2 == 0)?'짝수':'홀수'"></span>-->
+                <tr th:each="atmosphere : ${atmosphereObject}">
+                    <td th:text="${atmosphere.stationName}"></td>
+                    <td>
+                        <span th:text="(${atmosphere.khaiGrade}==1)?'GOOD':((${atmosphere.khaiGrade}==2)?'NORMAL':'BAD')"></span><br>
+                        <span th:text="'(' + ${atmosphere.khaiValue} + ')'"></span>
+                    </td>
+                    <!--<td th:text="(${atmosphere.pm10Grade}==1)?'GOOD':((${atmosphere.pm10Grade}==2)?'NORMAL':'BAD') + '' + '(' + ${atmosphere.pm10Value} + ')'"></td>-->
+                    <td>
+                        <span th:text="(${atmosphere.pm10Grade}==1)?'GOOD':((${atmosphere.pm10Grade}==2)?'NORMAL':'BAD')"></span><br>
+                        <span th:text="'(' + ${atmosphere.pm10Value} + ')'"></span>
+                    </td>
+                    <!--<td th:text="${atmosphere.pm25Grade} + '(' + ${atmosphere.pm25Value} + ')'"></td>-->
+                    <td>
+                        <span th:text="(${atmosphere.pm25Grade}==1)?'GOOD':((${atmosphere.pm25Grade}==2)?'NORMAL':'BAD')"></span><br>
+                        <span th:text="'(' + ${atmosphere.pm25Value} + ')'"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h5>Hospital</h5>
+        <!--
+        primary 쨍한 파랑색
+        success 초록색
+        warning 주황색
+        danger 빨강
+        light 하양
+        info 청록색
+        outline시리즈 : 아웃라인만 위의 색 입혀짐
+        -->
         <p>
-            <a class="btn btn-lg btn-secondary" href="/openapi/hospital/gethsptlmdcnclistinfoinqire">open data</a>
-            <a class="btn btn-lg btn-secondary" href="/hackathon/hospitals" th:style="${'width:40%'}">my hospital</a>
+            <a class="btn btn-lg btn-success" href="/openapi/hospital/gethsptlmdcnclistinfoinqire">open data</a>
+            <a class="btn btn-lg btn-success" href="/hackathon/hospitals" th:style="${'width:40%'}">my hospital</a>
         </p>
         <br>
-        <p class="lead"><b>Pharmacy</b></p>
+        <h5>Pharmacy</h5>
         <p>
-            <a class="btn btn-lg btn-dark" href="/openapi/pharmacy/getparmacylistinfoinqire">open data</a>
-            <a class="btn btn-lg btn-dark" href="/hackathon/pharmacies" th:style="${'width:40%'}">my pharmacy</a>
+            <a class="btn btn-lg btn-info" href="/openapi/pharmacy/getparmacylistinfoinqire">open data</a>
+            <a class="btn btn-lg btn-info" href="/hackathon/pharmacies" th:style="${'width:40%'}">my pharmacy</a>
         </p>
         <br>
-        <p class="lead"><b>medical checkup</b></p>
+        <h5>Medical checkup</h5>
         <p>
-            <a class="btn btn-lg btn-info" href="/">open data</a>
-            <a class="btn btn-lg btn-info" href="/" th:style="${'width:40%'}">my health</a>
+            <a class="btn btn-lg btn-primary" href="/">open data</a>
+            <a class="btn btn-lg btn-primary" href="/" th:style="${'width:40%'}">my health</a>
         </p>
         <!--<a href="/openapi/samplemap"><p class="text-muted">sample map</p></a>
         <a href="/springmvchtml"><p class="text-muted">springmvc html</p></a>
