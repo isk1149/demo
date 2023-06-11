@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HsptlBassInfoInqireItems {
-    //private List<HsptlBassInfoInqireItem> item = new ArrayList<>();
-    private List<HsptlBassInfoInqireItem> item;
+    //private List<HsptlBassInfoInqireItem> item;
+    private HsptlBassInfoInqireItem item;
 }

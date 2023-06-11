@@ -33,6 +33,7 @@ public class ParmacyListInfoInqireItem {
     private String hpid;
     private String postCdn1;
     private String postCdn2;
-    private String wgs84Lon;
-    private String wgs84Lat;
+    private double wgs84Lon;
+    private double wgs84Lat;
+    private String dutyInf;
 }

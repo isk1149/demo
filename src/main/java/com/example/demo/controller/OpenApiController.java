@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,19 +44,21 @@ public class OpenApiController {
         return "openapi";
     }
 
-    @ResponseBody
-    @GetMapping("/getUlfptcaAlarmInfo")
-    public String ulfptcaAlarmInfo() throws IOException {
+    @GetMapping("/openapi/samplemap")
+    public String sampleMap() {
+        return "sampleMap";
+    }
+
+    @GetMapping("/openapi/atmosphere/getulfptcaalarminfo")
+    public String ulfptcaAlarmInfo(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
-        paramMap.put("year", URLEncoder.encode("2023", "UTF-8"));
+        paramMap.put("returnType", "json");
+        paramMap.put("year", "2023");
 
-        //UlfptcaAlarmInfo jsonObject = new UlfptcaAlarmInfo();
-        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UlfptcaAlarmInfo.class);
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -65,23 +68,22 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getMsrstnAcctoRltmMesureDnsty")
-    public String msrstnAcctoRltmMesureDnsty() throws IOException {
+    @GetMapping("/openapi/atmosphere/getmsrstnacctorltmmesurednsty")
+    public String msrstnAcctoRltmMesureDnsty(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("returnType", "json");
         paramMap.put("stationName", URLEncoder.encode("종로구", "UTF-8"));
-        paramMap.put("dataTerm", URLEncoder.encode("DAILY", "UTF-8"));
+        paramMap.put("dataTerm", "DAILY");
 
-        //MsrstnAcctoRltmMesureDnsty jsonObject = new MsrstnAcctoRltmMesureDnsty();
-        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MsrstnAcctoRltmMesureDnsty.class);
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -91,21 +93,20 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getUnityAirEnvrnIdexSnstiveAboveMsrstnList")
-    public String unityAirEnvrnIdexSnstiveAboveMsrstnList() throws IOException {
+    @GetMapping("/openapi/atmosphere/getunityairenvrnidexsnstiveabovemsrstnlist")
+    public String unityAirEnvrnIdexSnstiveAboveMsrstnList(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getUnityAirEnvrnIdexSnstiveAboveMsrstnList";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("returnType", "json");
 
-        //UnityAirEnvrnIdexSnstiveAboveMsrstnList jsonObject = new UnityAirEnvrnIdexSnstiveAboveMsrstnList();
-        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, UnityAirEnvrnIdexSnstiveAboveMsrstnList.class);
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -115,18 +116,19 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getCtprvnRltmMesureDnsty")
-    public String ctprvnRltmMesureDnsty() throws IOException {
+    @GetMapping("/openapi/atmosphere/getctprvnrltmmesurednsty")
+    public String ctprvnRltmMesureDnsty(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("returnType", "json");
         paramMap.put("sidoName", URLEncoder.encode("전국", "UTF-8"));
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
@@ -138,21 +140,20 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getMinuDustFrcstDspth")
-    public String minuDustFrcstDspth() throws IOException {
+    @GetMapping("/openapi/atmosphere/getminudustfrcstdspth")
+    public String minuDustFrcstDspth(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("returnType", "json");
 
-        //MinuDustFrcstDspth jsonObject = new MinuDustFrcstDspth();
-        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustFrcstDspth.class);
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -162,21 +163,20 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getMinuDustWeekFrcstDspth")
-    public String minuDustWeekFrcstDspth() throws IOException{
+    @GetMapping("/openapi/atmosphere/getminudustweekfrcstdspth")
+    public String minuDustWeekFrcstDspth(Model model) throws IOException{
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustWeekFrcstDspth";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("returnType", URLEncoder.encode("json", "UTF-8"));
+        paramMap.put("returnType", "json");
 
-        //MinuDustWeekFrcstDspth jsonObject = new MinuDustWeekFrcstDspth();
-        //String jsonString = openApiCallJsonStringReturn(url, paramMap, jsonObject, MinuDustWeekFrcstDspth.class);
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -186,7 +186,9 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
     /**
@@ -194,9 +196,8 @@ public class OpenApiController {
      * @return String
      * @throws IOException
      */
-    @ResponseBody
-    @GetMapping("/getHsptlMdcncListInfoInqire")
-    public String hsptlMdcncListInfoInqire() throws IOException {
+    @GetMapping("/openapi/hospital/gethsptlmdcnclistinfoinqire")
+    public String hsptlMdcncListInfoInqire(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
 
@@ -204,36 +205,12 @@ public class OpenApiController {
         paramMap.put("serviceKey", serviceKey);
         paramMap.put("Q0", URLEncoder.encode("서울특별시", "UTF-8"));
         paramMap.put("Q1", URLEncoder.encode("강남구", "UTF-8"));
-        paramMap.put("Q2", URLEncoder.encode("B", "UTF-8"));
-
-        //StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire"); /*URL*/
-        //urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
-        //urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); /*주소(시도)*/
-        //urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); /*주소(시군구)*/
-        //urlBuilder.append("&" + URLEncoder.encode("QZ","UTF-8") + "=" + URLEncoder.encode("B", "UTF-8")); /*CODE_MST의'H000' 참조(B:병원, C:의원)*/
-        //log.info("url={}", urlBuilder.toString());
+        paramMap.put("QN", URLEncoder.encode("이비인", "UTF-8"));
+        //paramMap.put("QZ", "B");
+        //paramMap.put("QD", "D003");
+        paramMap.put("numOfRows", "100");
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        log.info("Response code={}", conn.getResponseCode());
-
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
 
         JSONObject json = XML.toJSONObject(jsonString);
         HsptlMdcncListInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncListInfoInqire.class);
@@ -241,7 +218,9 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
     /**
@@ -249,44 +228,18 @@ public class OpenApiController {
      * @return
      * @throws IOException
      */
-    @ResponseBody
-    @GetMapping("/getHsptlMdcncLcinfoInqire")
-    public String hsptlMdcncLcinfoInqire() throws IOException{
+    @GetMapping("/openapi/hospital/gethsptlmdcnclcinfoinqire")
+    public String hsptlMdcncLcinfoInqire(Model model) throws IOException{
 
         String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("WGS84_LAT", URLEncoder.encode("37.538034", "UTF-8"));
-        paramMap.put("WGS84_LON", URLEncoder.encode("127.048523", "UTF-8"));
-        //paramMap.put("Q2", URLEncoder.encode("B", "UTF-8"));
-
-        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("WGS84_LAT","UTF-8") + "=" + URLEncoder.encode("37.538034", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("WGS84_LON","UTF-8") + "=" + URLEncoder.encode("127.048523", "UTF-8"));
-        log.info("url={}", urlBuilder.toString());*/
+        //metlife tower latitude, longitude
+        paramMap.put("WGS84_LAT", "37.503041");
+        paramMap.put("WGS84_LON", "127.045502");
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        log.info("Response code={}", conn.getResponseCode());
-
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
 
         JSONObject json = XML.toJSONObject(jsonString);
         HsptlMdcncLcinfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlMdcncLcinfoInqire.class);
@@ -294,7 +247,9 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
     /**
@@ -302,39 +257,16 @@ public class OpenApiController {
      * @return
      * @throws IOException
      */
-    @ResponseBody
-    @GetMapping("/getHsptlBassInfoInqire")
-    public String hsptlBassInfoInqire() throws IOException{
+    @GetMapping("/openapi/hospital/gethsptlbassinfoinqire")
+    public String hsptlBassInfoInqire(Model model) throws IOException{
 
         String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-
-        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        log.info("url={}", urlBuilder.toString());*/
+        paramMap.put("HPID", "A1124177"); //굿본재활의학과의원 A1124177
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        log.info("Response code={}", conn.getResponseCode());
-
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
 
         JSONObject json = XML.toJSONObject(jsonString);
         HsptlBassInfoInqire jsonObject = objectMapper.readValue(json.toString(), HsptlBassInfoInqire.class);
@@ -342,13 +274,15 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
 
-    @ResponseBody
-    @GetMapping("/getParmacyListInfoInqire")
-    public String pharmacy() throws IOException {
+
+    @GetMapping("/openapi/pharmacy/getparmacylistinfoinqire")
+    public String parmacyListInfoInqire(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
 
@@ -357,38 +291,7 @@ public class OpenApiController {
         paramMap.put("Q0", URLEncoder.encode("서울특별시", "UTF-8"));
         paramMap.put("Q1", URLEncoder.encode("강남구", "UTF-8"));
 
-        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); *//*주소(시도)*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); *//*주소(시군구)*//*
-        urlBuilder.append("&" + URLEncoder.encode("QT","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*월~일요일, 공휴일: 1~8*//*
-        urlBuilder.append("&" + URLEncoder.encode("QN","UTF-8") + "=" + URLEncoder.encode("삼성약국", "UTF-8")); *//*기관명*//*
-        urlBuilder.append("&" + URLEncoder.encode("ORD","UTF-8") + "=" + URLEncoder.encode("NAME", "UTF-8")); *//*순서*//*
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*페이지 번호*//*
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); *//*목록 건수*//*
-        */
-
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
-        //System.out.println(sb.toString());
 
         JSONObject json = XML.toJSONObject(jsonString);
         ParmacyListInfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyListInfoInqire.class);
@@ -396,52 +299,23 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getParmacyLcinfoInqire")
-    public String parmacyLcinfoInqire() throws IOException {
+    @GetMapping("/openapi/pharmacy/getparmacylcinfoinqire")
+    public String parmacyLcinfoInqire(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        paramMap.put("WGS84_LAT", URLEncoder.encode("37.503041", "UTF-8"));
-        paramMap.put("WGS84_LON", URLEncoder.encode("127.045502", "UTF-8"));
-
-        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); *//*주소(시도)*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); *//*주소(시군구)*//*
-        urlBuilder.append("&" + URLEncoder.encode("QT","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*월~일요일, 공휴일: 1~8*//*
-        urlBuilder.append("&" + URLEncoder.encode("QN","UTF-8") + "=" + URLEncoder.encode("삼성약국", "UTF-8")); *//*기관명*//*
-        urlBuilder.append("&" + URLEncoder.encode("ORD","UTF-8") + "=" + URLEncoder.encode("NAME", "UTF-8")); *//*순서*//*
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*페이지 번호*//*
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); *//*목록 건수*//*
-         */
+        //metlife tower latitude, longitude
+        paramMap.put("WGS84_LAT", "37.503041");
+        paramMap.put("WGS84_LON", "127.045502");
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
-        //System.out.println(sb.toString());
 
         JSONObject json = XML.toJSONObject(jsonString);
         ParmacyLcinfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyLcinfoInqire.class);
@@ -449,51 +323,21 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
-    @ResponseBody
-    @GetMapping("/getParmacyBassInfoInqire")
-    public String parmacyBassInfoInqire() throws IOException {
+    @GetMapping("/openapi/pharmacy/getparmacybassinfoinqire")
+    public String parmacyBassInfoInqire(Model model) throws IOException {
 
         String url = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyBassInfoInqire";
 
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
-        //paramMap.put("HPID", "C1108484");
-
-        /*StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"); *//*URL*//*
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); *//*Service Key*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q0","UTF-8") + "=" + URLEncoder.encode("서울특별시", "UTF-8")); *//*주소(시도)*//*
-        urlBuilder.append("&" + URLEncoder.encode("Q1","UTF-8") + "=" + URLEncoder.encode("강남구", "UTF-8")); *//*주소(시군구)*//*
-        urlBuilder.append("&" + URLEncoder.encode("QT","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*월~일요일, 공휴일: 1~8*//*
-        urlBuilder.append("&" + URLEncoder.encode("QN","UTF-8") + "=" + URLEncoder.encode("삼성약국", "UTF-8")); *//*기관명*//*
-        urlBuilder.append("&" + URLEncoder.encode("ORD","UTF-8") + "=" + URLEncoder.encode("NAME", "UTF-8")); *//*순서*//*
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); *//*페이지 번호*//*
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); *//*목록 건수*//*
-         */
+        paramMap.put("HPID", "C1108328"); //누리약국 C1108328
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "XML");
-
-        /*URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();*/
-        //System.out.println(sb.toString());
 
         JSONObject json = XML.toJSONObject(jsonString);
         ParmacyBassInfoInqire jsonObject = objectMapper.readValue(json.toString(), ParmacyBassInfoInqire.class);
@@ -501,7 +345,9 @@ public class OpenApiController {
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(jsonObject);
 
-        return jsonPrettyString;
+        model.addAttribute("rawData", jsonPrettyString);
+
+        return "rawData";
     }
 
     /**
@@ -513,8 +359,7 @@ public class OpenApiController {
      * @return String
      * @throws IOException
      */
-    //private String openApiCallJsonStringReturn(String paramUrl, Map<String, String> paramMap, Object jsonObject, Class<?> jsonObjectClass) throws IOException{
-    private String callOpenApiAndReturnString(String paramUrl, Map<String, String> paramMap, String httpMethodType, String messageType) throws IOException{
+    public static String callOpenApiAndReturnString(String paramUrl, Map<String, String> paramMap, String httpMethodType, String messageType) throws IOException{
         StringBuilder urlBuilder = new StringBuilder(paramUrl);
         if (!paramMap.isEmpty()) {
             urlBuilder.append("?");
@@ -525,10 +370,7 @@ public class OpenApiController {
             while (keyIterator.hasNext()) {
                 String key = keyIterator.next();
                 String value = paramMap.get(key);
-                //if (key.equals("serviceKey"))
-                    urlBuilder.append(URLEncoder.encode(key,"UTF-8") + "=" + value);
-                //else
-                //    urlBuilder.append(URLEncoder.encode(key,"UTF-8") + "=" + URLEncoder.encode(value,"UTF-8"));
+                urlBuilder.append(URLEncoder.encode(key,"UTF-8") + "=" + value);
                 urlBuilder.append("&");
             }
             urlBuilder.deleteCharAt(urlBuilder.toString().length()-1); //마지막에 붙은 & 제거
@@ -558,14 +400,6 @@ public class OpenApiController {
         }
         rd.close();
         conn.disconnect();
-        //log.info("sb.toString()={}", sb.toString());
-
-        /*objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        jsonObject = objectMapper.readValue(sb.toString(), jsonObjectClass);
-        String jsonString = objectMapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(jsonObject);*/
 
         return sb.toString();
     }

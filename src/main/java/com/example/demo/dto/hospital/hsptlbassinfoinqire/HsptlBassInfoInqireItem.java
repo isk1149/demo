@@ -97,8 +97,8 @@ public class HsptlBassInfoInqireItem {
     private String o036;
     private String o037;
     private String o038;
-    private String wgs84Lon;
-    private String wgs84Lat;
+    private double wgs84Lon;
+    private double wgs84Lat;
     private String dgidIdName;
     private String hpbdn;
     private String hpccuyn;
