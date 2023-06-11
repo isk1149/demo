@@ -42,4 +42,5 @@ public class HsptlMdcncListInfoInqireItem {
     private String postCdn2;
     private double wgs84Lat;
     private double wgs84Lon;
+    private double distance;
 }

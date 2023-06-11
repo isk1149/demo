@@ -15,7 +15,7 @@
     <tr th:each="pharmacy : ${pharmacies}">
       <td>
         <b><h5 th:text="${pharmacy.dutyName}"></h5></b>
-        <p th:text="${pharmacy.postCdn1} + '' + ${pharmacy.postCdn2} + ' ' + ${pharmacy.dutyAddr}"></p>
+        <div th:text="${pharmacy.distance} + 'km ' + ${pharmacy.dutyAddr}"></div>
         <div th:text="${dayName} + ' ' + ${#strings.substring(pharmacy.dutyTime1s, 0, 2)} + ':00' + ' ~ ' + ${#strings.substring(pharmacy.dutyTime1c, 0, 2)} + ':00'"></div>
         <div th:text="'TEL ' + ${pharmacy.dutyTel1}"></div>
         <a href="#" th:href="@{/hackathon/pharmacies(latitude=${pharmacy.wgs84Lat}, longitude=${pharmacy.wgs84Lon}, dutyName=${pharmacy.dutyName})}" class="btn btn-primary" role="button">map</a>

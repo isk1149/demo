@@ -36,4 +36,5 @@ public class ParmacyListInfoInqireItem {
     private double wgs84Lon;
     private double wgs84Lat;
     private String dutyInf;
+    private double distance;
 }

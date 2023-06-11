@@ -81,8 +81,9 @@ public class OpenApiController {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("serviceKey", serviceKey);
         paramMap.put("returnType", "json");
-        paramMap.put("stationName", URLEncoder.encode("종로구", "UTF-8"));
+        paramMap.put("stationName", URLEncoder.encode("강남구", "UTF-8"));
         paramMap.put("dataTerm", "DAILY");
+        paramMap.put("ver", "1.4");
 
         String jsonString = callOpenApiAndReturnString(url, paramMap, "GET", "JSON");
 
