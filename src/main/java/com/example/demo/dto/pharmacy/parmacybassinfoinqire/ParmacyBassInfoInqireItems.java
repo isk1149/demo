@@ -11,5 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParmacyBassInfoInqireItems {
-    private List<ParmacyBassInfoInqireItem> item;
+    //private List<ParmacyBassInfoInqireItem> item;
+    private ParmacyBassInfoInqireItem item;
 }

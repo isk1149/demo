@@ -1,31 +1,33 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
-    <title>Hello</title>
+    <title>Team BTS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
     <div class="jumbotron">
-        <!--<h1>DEMO SHOP</h1>-->
-        <p class="lead">회원 기능</p>
+        <p class="lead"><b>Hospital</b></p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/members">회원 목록</a>
+            <a class="btn btn-lg btn-secondary" href="/openapi/hospital/gethsptlmdcnclistinfoinqire">open data</a>
+            <a class="btn btn-lg btn-secondary" href="/hackathon/hospitals" th:style="${'width:40%'}">my hospital</a>
         </p>
-        <p class="lead">상품 기능</p>
+        <br>
+        <p class="lead"><b>Pharmacy</b></p>
         <p>
-            <a class="btn btn-lg btn-dark" href="/items/new">상품 등록</a>
-            <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>
+            <a class="btn btn-lg btn-dark" href="/openapi/pharmacy/getparmacylistinfoinqire">open data</a>
+            <a class="btn btn-lg btn-dark" href="/hackathon/pharmacies" th:style="${'width:40%'}">my pharmacy</a>
         </p>
-        <p class="lead">주문 기능</p>
+        <br>
+        <p class="lead"><b>medical checkup</b></p>
         <p>
-            <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
-            <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
+            <a class="btn btn-lg btn-info" href="/">open data</a>
+            <a class="btn btn-lg btn-info" href="/" th:style="${'width:40%'}">my health</a>
         </p>
+        <!--<a href="/openapi/samplemap"><p class="text-muted">sample map</p></a>
         <a href="/springmvchtml"><p class="text-muted">springmvc html</p></a>
-        <a href="/openapi"><p class="text-muted">OpenAPI-data.go.kr</p></a>
+        <a href="/openapi"><p class="text-muted">OpenAPI-data.go.kr</p></a>-->
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
