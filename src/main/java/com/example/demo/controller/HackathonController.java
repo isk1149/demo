@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.DayName;
+import com.example.demo.dto.atmospherepollution.msrstnacctorltmmesurednsty.MsrstnAcctoRltmMesureDnstyItem;
 import com.example.demo.dto.distance.LatLng;
 import com.example.demo.dto.hospital.hsptlmdcnclistinfoinqire.HsptlMdcncListInfoInqireItem;
 import com.example.demo.dto.pharmacy.parmacylistinfoinqire.ParmacyListInfoInqireItem;
+import com.example.demo.service.AtmosphereService;
 import com.example.demo.service.DistanceService;
 import com.example.demo.service.HospitalService;
 import com.example.demo.service.PharmacyService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
@@ -30,6 +33,8 @@ public class HackathonController {
     private DistanceService distanceService;
     @Autowired
     private PharmacyService pharmacyService;
+    @Autowired
+    private AtmosphereService atmosphereService;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -127,5 +132,50 @@ public class HackathonController {
         }
 
         return "pharmacyList";
+    }
+
+    @ResponseBody
+    @GetMapping("/hackathon/airpollution")
+    public MsrstnAcctoRltmMesureDnstyItem airpollution() throws Exception {
+
+        MsrstnAcctoRltmMesureDnstyItem airpollution = atmosphereService.getMsrstnAcctoRltmMesureDnstyItem();
+
+        return airpollution;
+    }
+
+    @ResponseBody
+    @GetMapping("/hackathon/hospital")
+    public List<HsptlMdcncListInfoInqireItem> hospitalList2() throws Exception {
+
+        Map<String, HsptlMdcncListInfoInqireItem> hospitalMap = hospitalService.getHsptlMdcncListInfoInqireMap();
+        List<LatLng> latLngs = distanceService.hospitalDistanceList(hospitalService.getHsptlMdcncListInfoInqire());
+        List<HsptlMdcncListInfoInqireItem> hospitals = new ArrayList<>();
+
+        for (int i = 0; i < hospitalMap.size(); i++) {
+            hospitals.add(hospitalMap.get(latLngs.get(i).getHpid()));
+        }
+        log.info("hospitalMap.size={}", hospitalMap.size());
+        log.info("latLngs.size={}", latLngs.size());
+        log.info("hospitals.size={}", hospitals.size());
+
+        return hospitals;
+    }
+
+    @ResponseBody
+    @GetMapping("/hackathon/pharmacy")
+    public List<ParmacyListInfoInqireItem> pharmacyList2() throws Exception {
+
+        Map<String, ParmacyListInfoInqireItem> pharmacyMap = pharmacyService.getParmacyListInfoInqireMap();
+        List<LatLng> latLngs = distanceService.pharmacyDistanceList(pharmacyService.getParmacyListInfoInqire());
+        List<ParmacyListInfoInqireItem> pharmacies = new ArrayList<>();
+
+        for (int i = 0; i < pharmacyMap.size(); i++) {
+            pharmacies.add(pharmacyMap.get(latLngs.get(i).getHpid()));
+        }
+        log.info("pharmacyMap.size={}", pharmacyMap.size());
+        log.info("latLngs.size={}", latLngs.size());
+        log.info("pharmacies.size={}", pharmacies.size());
+
+        return pharmacies;
     }
 }

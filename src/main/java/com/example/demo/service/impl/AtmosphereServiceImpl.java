@@ -28,7 +28,7 @@ public class AtmosphereServiceImpl implements AtmosphereService {
     @Override
     public MsrstnAcctoRltmMesureDnstyItem getMsrstnAcctoRltmMesureDnstyItem() throws Exception {
 
-        if (atmosphere1 != null) return atmosphere1.getResponse().getBody().getItems().get(0);
+        //if (atmosphere1 != null) return atmosphere1.getResponse().getBody().getItems().get(0);
 
         String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
 
